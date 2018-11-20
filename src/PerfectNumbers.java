@@ -1,21 +1,32 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PerfectNumbers {
 	public static void main(String[] args) {
-		System.out.println("I will ask you ten numbers, enter the first one");
+		System.out.println("I will ask you ten different numbers, enter the first one");
 		Scanner sc = new Scanner(System.in);
 		boolean finished = false;
 		while (finished == false) {
-			int[] enteredNumbersArray = new int[10];
-			int enteredNumbersCounter=0;
-			while (enteredNumbersCounter<10) {
+			ArrayList<Integer> enteredNumbersArrayList = new ArrayList<Integer>();
+			while (enteredNumbersArrayList.size()<10) {
 				if (sc.hasNextInt()) {
 					String entered = sc.nextLine();
 					String[] enteredNumbers = entered.split(" ");
 					if (enteredNumbers.length==1) {
 						if (Integer.parseInt(enteredNumbers[0])>0) {
-							enteredNumbersArray[enteredNumbersCounter]=Integer.parseInt(enteredNumbers[0]);
-							enteredNumbersCounter++;
+							boolean repeated=false;
+							for (int i=0;i<enteredNumbersArrayList.size();i++) {
+								if (Integer.parseInt(enteredNumbers[0])==enteredNumbersArrayList.get(i)) {
+									repeated=true;
+									break;
+								}
+							}
+							if (!repeated) {
+								enteredNumbersArrayList.add(Integer.parseInt(enteredNumbers[0]));
+							}
+							else {
+								System.out.println("You already entered that number, try it again.");
+							}
 						}
 						else {
 							System.out.println("Please, enter a positive number.");
@@ -30,18 +41,34 @@ public class PerfectNumbers {
 					sc.nextLine();
 				}
 			}
-			for (int i=0;i<enteredNumbersArray.length;i++) {
+			System.out.println("The perfect numbers are: ");
+			/*for (int i=0;i<enteredNumbersArrayList.size();i++) {
 				ArrayList<Integer> dividers = new ArrayList<Integer>();
-				int j=2;
-				while (j<=enteredNumbersArray[i]) {
-					if (enteredNumbersArray[i]%j==0) {
-						dividers
+				for (int j=1;j<enteredNumbersArrayList.get(i);j++) {
+					if (enteredNumbersArrayList.get(i)%j==0) {
+						dividers.add(j);
 					}
-					j++;
 				}
-				System.out.println(enteredNumbersArray[i]);
+				int sum=0;
+				for (int k=0;k<dividers.size();k++) {
+					sum=sum+dividers.get(k).intValue();
+				}
+				if (sum==enteredNumbersArrayList.get(i)) {
+					System.out.println(enteredNumbersArrayList.get(i));
+				}
+			}*/
+			for (int i=0;i<enteredNumbersArrayList.size();i++) {
+				int sum=0;
+				for (int j=1;j<enteredNumbersArrayList.get(i);j++) {
+					if (enteredNumbersArrayList.get(i).intValue()%j==0) {
+						sum=sum+j;
+					}
+				}
+				if (sum==enteredNumbersArrayList.get(i)) {
+					System.out.println(enteredNumbersArrayList.get(i));
+				}
 			}
-			System.out.println("Would you like to enter another number?(y/n)");
+			System.out.println("Would you like to enter more numbers?(y/n)");
 			boolean answered = false;
 			while (answered==false) {
 				String enteredAnswer = sc.nextLine();
@@ -50,7 +77,7 @@ public class PerfectNumbers {
 					switch (enteredTokens[0]) {
 						case "y":
 							answered=true;
-							System.out.println("Please, enter a positive number.");
+							System.out.println("I will ask you ten different numbers, enter the first one");
 							break;
 						case "n":
 							answered=true;

@@ -18,7 +18,7 @@ public class Triangle {
 						}
 						System.out.println("Would you like to enter another number?(y/n)");
 						boolean answered = false;
-						while (answered==false) {
+						while (!answered) {
 							String enteredAnswer = sc.nextLine();
 							String[] enteredTokens= enteredAnswer.split(" ");
 							if (enteredTokens.length==1) {
